@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>恋与深空 - 角色档案</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  
+  <!-- Tailwind配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6C5CE7', // 主色调：深紫色
+            secondary: '#FD79A8', // 辅助色：粉色
+            accent: '#0984E3', // 强调色：蓝色
+            dark: '#2D3436', // 深色
+            light: '#FFFFFF', // 浅色
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Montserrat"', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .text-shadow-lg {
+        text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      .animate-pulse-slow {
+        animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      .backdrop-blur {
+        backdrop-filter: blur(8px);
+      }
+      .clip-path-slant {
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+      }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+  </style>
+  
+  <!-- 导入字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-dark to-primary/90 text-light min-h-screen overflow-x-hidden">
+  <!-- 背景装饰元素 -->
+  <div class="fixed inset-0 overflow-hidden -z-10">
+    <div class="absolute top-0 left-0 w-full h-full bg-[url('https://picsum.photos/id/1015/1920/1080')] bg-cover bg-center opacity-20"></div>
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary/20 via-transparent to-dark/90"></div>
+    <div class="absolute top-20 left-10 w-64 h-64 rounded-full bg-secondary/20 blur-3xl animate-pulse-slow"></div>
+    <div class="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-accent/20 blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+  </div>
+
+  <!-- 导航栏 -->
+  <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="navbar">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between backdrop-blur bg-dark/50 border-b border-light/10">
+      <a href="#" class="flex items-center space-x-2">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+          <i class="fa fa-star text-light"></i>
+        </div>
+        <span class="text-xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">恋与深空</span>
+      </a>
+      
+      <!-- 桌面导航 -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="#home" class="font-medium hover:text-secondary transition-colors">首页</a>
+        <a href="#characters" class="font-medium hover:text-secondary transition-colors">角色档案</a>
+        <a href="#trailer" class="font-medium hover:text-secondary transition-colors">宣传视频</a>
+        <a href="#gallery" class="font-medium hover:text-secondary transition-colors">壁纸画廊</a>
+        <a href="#about" class="font-medium hover:text-secondary transition-colors">关于游戏</a>
+      </nav>
+      
+      <!-- 移动端菜单按钮 -->
+      <button class="md:hidden text-light focus:outline-none" id="menuBtn">
+        <i class="fa fa-bars text-xl"></i>
+      </button>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div class="md:hidden bg-dark/95 backdrop-blur absolute w-full left-0 top-full transform -translate-y-full opacity-0 transition-all duration-300 pointer-events-none" id="mobileMenu">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+        <a href="#home" class="py-2 font-medium hover:text-secondary transition-colors">首页</a>
+        <a href="#characters" class="py-2 font-medium hover:text-secondary transition-colors">角色档案</a>
+        <a href="#trailer" class="py-2 font-medium hover:text-secondary transition-colors">宣传视频</a>
+        <a href="#gallery" class="py-2 font-medium hover:text-secondary transition-colors">壁纸画廊</a>
+        <a href="#about" class="py-2 font-medium hover:text-secondary transition-colors">关于游戏</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-16">
+    <!-- 英雄区域 -->
+    <section id="home" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <div class="container mx-auto px-4 py-20 relative z-10">
+        <div class="max-w-3xl mx-auto text-center">
+          <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-display font-bold mb-6 leading-tight text-shadow-lg">
+            探索<span class="bg-clip-text text-transparent bg-gradient-to-r from-secondary to-accent">星际浪漫</span>的冒险之旅
+          </h1>
+          <p class="text-[clamp(1rem,2vw,1.25rem)] text-light/80 mb-10 max-w-2xl mx-auto">
+            在遥远的未来，与四位性格迥异的角色展开跨越星系的浪漫故事，揭开宇宙与心灵的双重奥秘。
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="#characters" class="px-8 py-3 bg-gradient-to-r from-primary to-accent rounded-full font-medium hover:shadow-lg hover:shadow-primary/20 transition-all transform hover:-translate-y-1">
+              探索角色
+            </a>
+            <a href="#trailer" class="px-8 py-3 bg-transparent border border-light/30 rounded-full font-medium hover:bg-light/10 transition-all">
+              观看预告片
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 装饰元素 -->
+      <div class="absolute bottom-10 left-0 w-full flex justify-center">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-secondary to-accent animate-pulse-slow"></div>
+      </div>
+    </section>
+
+    <!-- 角色档案 -->
+    <section id="characters" class="py-20 relative">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-display font-bold mb-4">角色档案</h2>
+          <p class="text-light/70 max-w-2xl mx-auto">
+            遇见四位来自不同星球的角色，每个人都有独特的性格和秘密
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- 角色1 -->
+          <div class="bg-dark/40 backdrop-blur rounded-xl overflow-hidden transform transition-all hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10 group">
+            <div class="relative overflow-hidden">
+              <img src="https://picsum.photos/id/1005/400/500" alt="陆沉" class="w-full h-80 object-cover object-center transform transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent"></div>
+              <div class="absolute bottom-4 left-4">
+                <span class="px-3 py-1 bg-primary/80 rounded-full text-xs font-medium">指挥官</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">陆沉</h3>
+              <p class="text-light/70 text-sm mb-4">
+                神秘的星际舰队指挥官，看似冷酷无情，实则隐藏着不为人知的过去。
+              </p>
+              <div class="flex justify-between items-center">
+                <div class="flex space-x-2">
+                  <span class="w-3 h-3 rounded-full bg-primary"></span>
+                  <span class="w-3 h-3 rounded-full bg-secondary"></span>
+                  <span class="w-3 h-3 rounded-full bg-accent"></span>
+                </div>
+                <button class="text-secondary hover:text-secondary/80 transition-colors">
+                  <i class="fa fa-plus-circle"></i> 详情
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 角色2 -->
+          <div class="bg-dark/40 backdrop-blur rounded-xl overflow-hidden transform transition-all hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10 group">
+            <div class="relative overflow-hidden">
+              <img src="https://picsum.photos/id/1012/400/500" alt="里昂" class="w-full h-80 object-cover object-center transform transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent"></div>
+              <div class="absolute bottom-4 left-4">
+                <span class="px-3 py-1 bg-secondary/80 rounded-full text-xs font-medium">科学家</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">里昂</h3>
+              <p class="text-light/70 text-sm mb-4">
+                天才外星生物学家，对未知生物充满好奇，性格开朗但有时过于冲动。
+              </p>
+              <div class="flex justify-between items-center">
+                <div class="flex space-x-2">
+                  <span class="w-3 h-3 rounded-full bg-primary"></span>
+                  <span class="w-3 h-3 rounded-full bg-secondary"></span>
+                  <span class="w-3 h-3 rounded-full bg-accent"></span>
+                </div>
+                <button class="text-secondary hover:text-secondary/80 transition-colors">
+                  <i class="fa fa-plus-circle"></i> 详情
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 角色3 -->
+          <div class="bg-dark/40 backdrop-blur rounded-xl overflow-hidden transform transition-all hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10 group">
+            <div class="relative overflow-hidden">
+              <img src="https://picsum.photos/id/1013/400/500" alt="艾拉" class="w-full h-80 object-cover object-center transform transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent"></div>
+              <div class="absolute bottom-4 left-4">
+                <span class="px-3 py-1 bg-accent/80 rounded-full text-xs font-medium">领航员</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">艾拉</h3>
+              <p class="text-light/70 text-sm mb-4">
+                拥有预知能力的星际领航员，沉默寡言但内心热情，总是在关键时刻发挥重要作用。
+              </p>
+              <div class="flex justify-between items-center">
+                <div class="flex space-x-2">
+                  <span class="w-3 h-3 rounded-full bg-primary"></span>
+                  <span class="w-3 h-3 rounded-full bg-secondary"></span>
+                  <span class="w-3 h-3 rounded-full bg-accent"></span>
+                </div>
+                <button class="text-secondary hover:text-secondary/80 transition-colors">
+                  <i class="fa fa-plus-circle"></i> 详情
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 角色4 -->
+          <div class="bg-dark/40 backdrop-blur rounded-xl overflow-hidden transform transition-all hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/10 group">
+            <div class="relative overflow-hidden">
+              <img src="https://picsum.photos/id/1014/400/500" alt="凯斯" class="w-full h-80 object-cover object-center transform transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent"></div>
+              <div class="absolute bottom-4 left-4">
+                <span class="px-3 py-1 bg-secondary/80 rounded-full text-xs font-medium">机械师</span>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">凯斯</h3>
+              <p class="text-light/70 text-sm mb-4">
+                半机械人机械师，擅长制造各种高科技设备，性格幽默风趣，是团队中的开心果。
+              </p>
+              <div class="flex justify-between items-center">
+                <div class="flex space-x-2">
+                  <span class="w-3 h-3 rounded-full bg-primary"></span>
+                  <span class="w-3 h-3 rounded-full bg-secondary"></span>
+                  <span class="w-3 h-3 rounded-full bg-accent"></span>
+                </div>
+                <button class="text-secondary hover:text-secondary/80 transition-colors">
+                  <i class="fa fa-plus-circle"></i> 详情
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 宣传视频 -->
+    <section id="trailer" class="py-20 relative bg-gradient-to-b from-primary/10 to-dark/90 clip-path-slant">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-display font-bold mb-4">宣传视频</h2>
+          <p class="text-light/70 max-w-2xl mx-auto">
+            观看最新游戏预告片，感受星际冒险的魅力
+          </p>
+        </div>
+        
+        <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-primary/20">
+          <div class="aspect-w-16 aspect-h-9 bg-dark relative">
+            <img src="https://picsum.photos/id/1039/1280/720" alt="视频封面" class="w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <button class="w-20 h-20 rounded-full bg-primary/80 flex items-center justify-center hover:bg-primary transition-colors group">
+                <i class="fa fa-play text-2xl text-light group-hover:scale-110 transition-transform"></i>
+              </button>
+            </div>
+            <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-dark to-transparent">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h3 class="font-bold text-lg">《恋与深空》全球首曝PV</h3>
+                  <p class="text-light/70 text-sm">发布于 2025-01-15</p>
+                </div>
+                <div class="flex space-x-4">
+                  <button class="text-light/70 hover:text-light transition-colors">
+                    <i class="fa fa-thumbs-up"></i> 12.4K
+                  </button>
+                  <button class="text-light/70 hover:text-light transition-colors">
+                    <i class="fa fa-share-alt"></i> 分享
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 视频列表 -->
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-dark/40 backdrop-blur rounded-lg overflow-hidden hover:shadow-lg hover:shadow-primary/10 transition-shadow cursor-pointer">
+            <div class="relative">
+              <img src="https://picsum.photos/id/1040/400/225" alt="角色介绍" class="w-full h-40 object-cover">
+              <div class="absolute top-2 right-2 bg-dark/70 text-xs px-2 py-1 rounded">03:45</div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-medium mb-1">角色介绍：陆沉</h4>
+              <p class="text-light/60 text-sm">深入了解星际指挥官的内心世界</p>
+            </div>
+          </div>
+          
+          <div class="bg-dark/40 backdrop-blur rounded-lg overflow-hidden hover:shadow-lg hover:shadow-primary/10 transition-shadow cursor-pointer">
+            <div class="relative">
+              <img src="https://picsum.photos/id/1041/400/225" alt="游戏玩法" class="w-full h-40 object-cover">
+              <div class="absolute top-2 right-2 bg-dark/70 text-xs px-2 py-1 rounded">05:12</div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-medium mb-1">游戏玩法解析</h4>
+              <p class="text-light/60 text-sm">探索与战斗系统全面展示</p>
+            </div>
+          </div>
+          
+          <div class="bg-dark/40 backdrop-blur rounded-lg overflow-hidden hover:shadow-lg hover:shadow-primary/10 transition-shadow cursor-pointer">
+            <div class="relative">
+              <img src="https://picsum.photos/id/1042/400/225" alt="世界观" class="w-full h-40 object-cover">
+              <div class="absolute top-2 right-2 bg-dark/70 text-xs px-2 py-1 rounded">04:30</div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-medium mb-1">世界观设定</h4>
+              <p class="text-light/60 text-sm">了解未来星际社会的构成与冲突</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 壁纸画廊 -->
+    <section id="gallery" class="py-20 relative">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-display font-bold mb-4">壁纸画廊</h2>
+          <p class="text-light/70 max-w-2xl mx-auto">
+            收集精美的游戏壁纸，感受角色的独特魅力
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 transform hover:-translate-y-1">
+            <img src="https://picsum.photos/id/1043/600/800" alt="角色壁纸" class="w-full h-96 object-cover object-center transform transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-2">陆沉 - 星际指挥官</h3>
+                <div class="flex space-x-2 mt-4">
+                  <button class="px-4 py-2 bg-primary/80 rounded-full text-sm font-medium hover:bg-primary transition-colors">
+                    <i class="fa fa-download mr-1"></i> 下载
+                  </button>
+                  <button class="px-4 py-2 bg-transparent border border-light/30 rounded-full text-sm font-medium hover:bg-light/10 transition-colors">
+                    <i class="fa fa-expand mr-1"></i> 查看大图
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 transform hover:-translate-y-1">
+            <img src="https://picsum.photos/id/1044/600/800" alt="角色壁纸" class="w-full h-96 object-cover object-center transform transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-2">里昂 - 外星生物学家</h3>
+                <div class="flex space-x-2 mt-4">
+                  <button class="px-4 py-2 bg-primary/80 rounded-full text-sm font-medium hover:bg-primary transition-colors">
+                    <i class="fa fa-download mr-1"></i> 下载
+                  </button>
+                  <button class="px-4 py-2 bg-transparent border border-light/30 rounded-full text-sm font-medium hover:bg-light/10 transition-colors">
+                    <i class="fa fa-expand mr-1"></i> 查看大图
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 transform hover:-translate-y-1">
+            <img src="https://picsum.photos/id/1045/600/800" alt="角色壁纸" class="w-full h-96 object-cover object-center transform transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-2">艾拉 - 星际领航员</h3>
+                <div class="flex space-x-2 mt-4">
+                  <button class="px-4 py-2 bg-primary/80 rounded-full text-sm font-medium hover:bg-primary transition-colors">
+                    <i class="fa fa-download mr-1"></i> 下载
+                  </button>
+                  <button class="px-4 py-2 bg-transparent border border-light/30 rounded-full text-sm font-medium hover:bg-light/10 transition-colors">
+                    <i class="fa fa-expand mr-1"></i> 查看大图
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-12">
+          <button class="px-8 py-3 bg-transparent border border-light/30 rounded-full font-medium hover:bg-light/10 transition-all">
+            查看更多壁纸
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 关于游戏 -->
+    <section id="about" class="py-20 relative bg-gradient-to-b from-dark to-primary/20">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-display font-bold mb-4">关于游戏</h2>
+          <p class="text-light/70 max-w-2xl mx-auto">
+            了解更多关于《恋与深空》的故事背景和游戏特色
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-6">游戏背景</h3>
+            <p class="text-light/80 mb-6">
+              《恋与深空》是一款以未来星际为背景的恋爱冒险游戏。在2125年，人类已经探索了银河系的大部分区域，建立了多个星际殖民地。然而，一个神秘的外星文明突然出现，威胁着人类的生存。
+            </p>
+            <p class="text-light/80 mb-6">
+              玩家将扮演一名新晋的星际舰队指挥官，与四位性格迥异的角色一起，探索未知的星系，解开外星文明的秘密，同时也将面临爱情与责任的抉择。
+            </p>
+            
+            <div class="mt-8">
+              <h4 class="text-xl font-bold mb-4">游戏特色</h4>
+              <ul class="space-y-4">
+                <li class="flex items-start">
+                  <div class="w-6 h-6 rounded-full bg-primary/30 flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                    <i class="fa fa-star text-primary text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium">沉浸式剧情体验</h5>
+                    <p class="text-light/70 text-sm">多分支剧情系统，你的每个选择都将影响故事发展</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <div class="w-6 h-6 rounded-full bg-primary/30 flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                    <i class="fa fa-users text-primary text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium">多样化角色互动</h5>
+                    <p class="text-light/70 text-sm">与四位主角建立深厚关系，体验不同类型的浪漫</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <div class="w-6 h-6 rounded-full bg-primary/30 flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                    <i class="fa fa-rocket text-primary text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium">星际探索与冒险</h5>
+                    <p class="text-light/70 text-sm">探索神秘星球，解开宇宙谜题，参与刺激战斗</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <div class="w-6 h-6 rounded-full bg-primary/30 flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                    <i class="fa fa-paint-brush text-primary text-sm"></i>
+                  </div>
+                  <div>
+                    <h5 class="font-medium">精美视觉与音乐</h5>
+                    <p class="text-light/70 text-sm">高品质角色立绘和原创音乐，打造沉浸式体验</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="relative">
+            <div class="relative z-10 rounded-xl overflow-hidden shadow-2xl">
+              <img src="https://picsum.photos/id/1046/600/800" alt="游戏截图" class="w-full">
+            </div>
+            <div class="absolute -bottom-6 -right-6 w-64 h-64 rounded-full bg-accent/30 blur-3xl -z-10"></div>
+            <div class="absolute -top-6 -left-6 w-64 h-64 rounded-full bg-secondary/30 blur-3xl -z-10"></div>
+          </div>
+        </div>
+        
+        <!-- 游戏数据统计 -->
+        <div class="mt-20">
+          <h3 class="text-2xl font-bold text-center mb-12">游戏数据统计</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-dark/40 backdrop-blur rounded-xl p-6 shadow-lg">
+              <h4 class="font-bold mb-6">角色人气分布</h4>
+              <div class="h-64">
+                <canvas id="characterChart"></canvas>
+              </div>
+            </div>
+            <div class="bg-dark/40 backdrop-blur rounded-xl p-6 shadow-lg">
+              <h4 class="font-bold mb-6">游戏内容分类</h4>
+              <div class="h-64">
+                <canvas id="contentChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 订阅区域 -->
+    <section class="py-16 relative">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto bg-gradient-to-r from-primary/60 to-accent/60 backdrop-blur rounded-2xl p-8 md:p-12 shadow-xl shadow-primary/20 relative overflow-hidden">
+          <!-- 装饰元素 -->
+          <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-secondary/20 blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+          <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-primary/20 blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+          
+          <div class="relative z-10 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">订阅获取最新资讯</h2>
+            <p class="text-light/80 mb-8 max-w-2xl mx-auto">
+              第一时间获取《恋与深空》的最新消息、活动预告和独家内容
+            </p>
+            
+            <form class="max-w-md mx-auto">
+              <div class="flex flex-col sm:flex-row gap-4">
+                <input type="email" placeholder="输入你的邮箱地址" class="flex-1 px-4 py-3 rounded-full bg-dark/40 border border-light/20 focus:outline-none focus:border-primary transition-colors">
+                <button type="submit" class="px-6 py-3 bg-secondary hover:bg-secondary/90 rounded-full font-medium transition-colors">
+                  订阅
+                </button>
+              </div>
+              <p class="text-xs text-light/60 mt-4">
+                我们尊重您的隐私，不会向第三方分享您的信息
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="bg-dark/80 backdrop-blur py-12 border-t border-light/10">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-6">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+              <i class="fa fa-star text-light"></i>
+            </div>
+            <span class="text-xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">恋与深空</span>
+          </div>
+          <p class="text-light/60 mb-6">
+            一款融合了科幻与浪漫的冒险游戏，在星际旅途中寻找真爱与真相。
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 rounded-full bg-light/10 flex items-center justify-center hover:bg-primary/20 transition-colors">
+              <i class="fa fa-weibo text-light"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-light/10 flex items-center justify-center hover:bg-primary/20 transition-colors">
+              <i class="fa fa-wechat text-light"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-light/10 flex items-center justify-center hover:bg-primary/20 transition-colors">
+              <i class="fa fa-instagram text-light"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-light/10 flex items-center justify-center hover:bg-primary/20 transition-colors">
+              <i class="fa fa-twitter text-light"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">快速链接</h4>
+          <ul class="space-y-3">
+            <li><a href="#home" class="text-light/60 hover:text-light transition-colors">首页</a></li>
+            <li><a href="#characters" class="text-light/60 hover:text-light transition-colors">角色档案</a></li>
+            <li><a href="#trailer" class="text-light/60 hover:text-light transition-colors">宣传视频</a></li>
+            <li><a href="#gallery" class="text-light/60 hover:text-light transition-colors">壁纸画廊</a></li>
+            <li><a href="#about" class="text-light/60 hover:text-light transition-colors">关于游戏</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">支持</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-light/60 hover:text-light transition-colors">常见问题</a></li>
+            <li><a href="#" class="text-light/60 hover:text-light transition-colors">联系我们</a></li>
+            <li><a href="#" class="text-light/60 hover:text-light transition-colors">隐私政策</a></li>
+            <li><a href="#" class="text-light/60 hover:text-light transition-colors">用户协议</a></li>
+            <li><a href="#" class="text-light/60 hover:text-light transition-colors">退款政策</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">下载游戏</h4>
+          <p class="text-light/60 mb-4">
+            立即下载《恋与深空》，开启你的星际冒险
+          </p>
+          <div class="space-y-3">
+            <a href="#" class="flex items-center space-x-3 px-4 py-2 bg-light/10 rounded-lg hover:bg-light/20 transition-colors">
+              <i class="fa fa-apple text-2xl"></i>
+              <div>
+                <div class="text-xs text-light/60">下载</div>
+                <div class="font-medium">App Store</div>
+              </div>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-2 bg-light/10 rounded-lg hover:bg-light/20 transition-colors">
+              <i class="fa fa-android text-2xl"></i>
+              <div>
+                <div class="text-xs text-light/60">下载</div>
+                <div class="font-medium">Google Play</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border-t border-light/10 mt-12 pt-8 text-center text-light/40 text-sm">
+        <p>&copy; 2025 恋与深空 版权所有</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-dark/80');
+        navbar.classList.add('shadow-lg');
+      } else {
+        navbar.classList.remove('bg-dark/80');
+        navbar.classList.remove('shadow-lg');
+      }
+    });
+    
+    // 移动端菜单
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    menuBtn.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('opacity-0')) {
+        mobileMenu.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+        mobileMenu.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+        menuBtn.innerHTML = '<i class="fa fa-times text-xl"></i>';
+      } else {
+        mobileMenu.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+        mobileMenu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+        menuBtn.innerHTML = '<i class="fa fa-bars text-xl"></i>';
+      }
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        // 关闭移动菜单（如果打开）
+        if (!mobileMenu.classList.contains('opacity-0')) {
+          mobileMenu.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+          mobileMenu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          menuBtn.innerHTML = '<i class="fa fa-bars text-xl"></i>';
+        }
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // 初始化图表
+    document.addEventListener('DOMContentLoaded', function() {
+      // 角色人气图表
+      const characterCtx = document.getElementById('characterChart').getContext('2d');
+      new Chart(characterCtx, {
+        type: 'bar',
+        data: {
+          labels: ['陆沉', '里昂', '艾拉', '凯斯'],
+          datasets: [{
+            label: '角色人气值',
+            data: [85, 78, 82, 76],
+            backgroundColor: [
+              'rgba(108, 92, 231, 0.7)',
+              'rgba(253, 121, 168, 0.7)',
+              'rgba(9, 132, 227, 0.7)',
+              'rgba(250, 177, 160, 0.7)'
+            ],
+            borderColor: [
+              'rgba(108, 92, 231, 1)',
+              'rgba(253, 121, 168, 1)',
+              'rgba(9, 132, 227, 1)',
+              'rgba(250, 177, 160, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              ticks: {
+                color: 'rgba(255, 255, 255, 0.7)'
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: 'rgba(255, 255, 255, 0.7)'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      });
+      
+      // 游戏内容分类图表
+      const contentCtx = document.getElementById('contentChart').getContext('2d');
+      new Chart(contentCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['主线剧情', '支线任务', '探索内容', '战斗系统', '社交互动'],
+          datasets: [{
+            data: [35, 25, 15, 15, 10],
+            backgroundColor: [
+              'rgba(108, 92, 231, 0.7)',
+              'rgba(253, 121, 168, 0.7)',
+              'rgba(9, 132, 227, 0.7)',
+              'rgba(0, 184, 148, 0.7)',
+              'rgba(253, 203, 110, 0.7)'
+            ],
+            borderColor: [
+              'rgba(108, 92, 231, 1)',
+              'rgba(253, 121, 168, 1)',
+              'rgba(9, 132, 227, 1)',
+              'rgba(0, 184, 148, 1)',
+              'rgba(253, 203, 110, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                color: 'rgba(255, 255, 255, 0.7)',
+                padding: 20
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>    
